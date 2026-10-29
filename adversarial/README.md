@@ -73,7 +73,9 @@ The prompt said "ignoring NULL salaries" but the AI only applied it to one of th
 - **A6, scope:** the AI noted on its own that it reverses code points, not user-perceived characters
   (a letter plus a combining accent becomes two code points). That is exactly what the prompt asked for,
   and pointing out the limitation is good practice.
-- **A1, A4, A7:** no issues found. A7's use of `SELECT DISTINCT` before `ROW_NUMBER()` is the exact step
+- **A1, portability:** uses the GCC-only `#include <bits/stdc++.h>`, so it does not compile with Apple
+  clang on macOS as written (same issue as problems 01 and 02).
+- **A1, A4, A7:** no logic issues found. A7's use of `SELECT DISTINCT` before `ROW_NUMBER()` is the exact step
   that the trap targets.
 
 ## What makes a good adversarial prompt (lessons from this round)

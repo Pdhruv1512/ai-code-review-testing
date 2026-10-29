@@ -6,7 +6,7 @@ Environment: Python 3.9.6, Darwin x86_64
 
 | Test | Category | Result | Time (s) | Details |
 |---|---|---|---|---|
-| basic | basic | PASS | 0.05 |  |
+| basic | basic | PASS | 0.04 |  |
 | positive halves | trap | PASS | 0.04 |  |
 | negative halves | trap | PASS | 0.04 |  |
 | negative non-halves | edge | PASS | 0.04 |  |

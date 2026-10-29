@@ -84,8 +84,14 @@ def test_program(folder, tests, lang):
     with tempfile.TemporaryDirectory() as tmp:
         if lang == "cpp":
             exe = os.path.join(tmp, "sol")
-            c = subprocess.run(["g++", "-O2", "-std=c++17", "-o", exe, os.path.join(folder, "solution.cpp")],
-                               capture_output=True, text=True)
+            base_cmd = ["g++", "-O2", "-std=c++17", "-o", exe, os.path.join(folder, "solution.cpp")]
+            c = subprocess.run(base_cmd, capture_output=True, text=True)
+            if c.returncode != 0 and "bits/stdc++.h" in c.stderr:
+                # <bits/stdc++.h> is GCC-only. Retry with the compatibility header so the logic can
+                # still be tested, and record the portability problem in the report.
+                c = subprocess.run(base_cmd + ["-I", os.path.join(ROOT, "compat")], capture_output=True, text=True)
+                NOTES.append("Does not compile with this compiler as written: `<bits/stdc++.h>` is GCC-only. "
+                             "Tested using the compatibility header in `compat/`.")
             if c.returncode != 0:
                 return [("compile", "build", False, "COMPILE ERROR: " + short(c.stderr, 200), 0)]
             cmd = [exe]
@@ -150,7 +156,11 @@ def environment(lang):
     return ", ".join(parts)
 
 
+NOTES = []  # portability notes collected while testing one problem
+
+
 def run_problem(pid):
+    NOTES.clear()
     base = ADVERSARIAL if pid.upper().startswith("A") else PROBLEMS
     pid = pid.upper() if base == ADVERSARIAL else pid
     matches = [d for d in sorted(os.listdir(base))
@@ -178,6 +188,7 @@ def run_problem(pid):
     lines = [f"## Test results: {matches[0]}", "",
              f"**{passed}/{total} tests passed**", "",
              f"Environment: {environment(lang)}", "",
+             *[line for n in NOTES for line in (f"Note: {n}", "")],
              "| Test | Category | Result | Time (s) | Details |",
              "|---|---|---|---|---|"]
     for name, cat, ok, detail, secs in results:
@@ -187,6 +198,8 @@ def run_problem(pid):
         f.write(report)
 
     print(f"\n{matches[0]}: {passed}/{total} passed")
+    for n in NOTES:
+        print(f"  NOTE  {n}")
     for name, cat, ok, detail, _ in results:
         if not ok:
             print(f"  FAIL  {name} [{cat}]  {detail}")

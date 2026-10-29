@@ -15,4 +15,4 @@ Environment: Python 3.9.6, Darwin x86_64
 | German sharp s | spec | PASS | 0.03 |  |
 | accented letters | edge | PASS | 0.03 |  |
 | empty input | edge | PASS | 0.03 |  |
-| 200k lines (speed) | performance | PASS | 0.12 |  |
+| 200k lines (speed) | performance | PASS | 0.11 |  |

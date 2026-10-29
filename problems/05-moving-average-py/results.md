@@ -6,7 +6,7 @@ Environment: Python 3.9.6, Darwin x86_64
 
 | Test | Category | Result | Time (s) | Details |
 |---|---|---|---|---|
-| basic | basic | PASS | 0.04 |  |
+| basic | basic | PASS | 0.05 |  |
 | window of 1 | edge | PASS | 0.03 |  |
 | window equals list length | edge | PASS | 0.03 |  |
 | window larger than list | edge | PASS | 0.03 |  |

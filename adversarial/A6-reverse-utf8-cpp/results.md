@@ -12,5 +12,5 @@ Environment: Python 3.9.6, Apple clang version 17.0.0 (clang-1700.0.13.5), Darwi
 | emoji (4 bytes) | trap | PASS | 0.01 |  |
 | mixed scripts | trap | PASS | 0.01 |  |
 | single multi-byte character | edge | PASS | 0.01 |  |
-| empty line | edge | PASS | 0.01 |  |
+| empty line | edge | PASS | 0.00 |  |
 | long line (speed) | performance | PASS | 0.10 |  |

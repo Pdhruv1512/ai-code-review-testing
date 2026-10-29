@@ -16,7 +16,7 @@
 | Edge cases | 5 | Handles no pair, n = 1, duplicates, negatives, and a sum above 32-bit range (`long long` for values and complement) |
 | Efficiency | 5 | One pass with a hash map; 100k-element test ran in 0.04 s |
 | Instruction following | 2 | Ignores the one rule that makes this prompt different from textbook Two Sum: "smallest i; if there is still a tie, the smallest j" |
-| Code quality | 4 | Clean and readable, `reserve` avoids rehashing; the comment "Keep the earliest index" is true but does not deliver the required tie-break |
+| Code quality | 3 | Clean and readable, `reserve` avoids rehashing; but uses the GCC-only `<bits/stdc++.h>`, so it does not compile on macOS clang (see Portability) |
 | Explanation accuracy | 2 | Claims the tie-break is satisfied (false). Says O(n log n) at the top and O(n) at the bottom (it is O(n) expected) |
 
 ## Test results
@@ -62,6 +62,14 @@ Environment: Python 3.10.12, g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0, Linux 
    cout << bi << ' ' << bj << '\n';
    ```
 
+## Portability
+
+The code starts with `#include <bits/stdc++.h>`, a GCC-only header. It compiles with g++ on Linux but
+**fails to compile with Apple clang on macOS** (`fatal error: 'bits/stdc++.h' file not found`). The prompt
+only asked for C++17, so the program should use standard headers (`<iostream>`, `<vector>`, `<unordered_map>`).
+The test runner retries with a compatibility header in `compat/` so the logic can still be tested,
+and notes this in `results.md`.
+
 ## AI's claims vs reality
 
 - The AI said: "The first pair found has the smallest possible j. For that j, the map stores the smallest
@@ -77,6 +85,6 @@ Environment: Python 3.10.12, g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0, Linux 
 
 ## Summary
 
-The code is fast, overflow-safe, and correct for inputs with a single valid pair. It solves textbook
+The code is fast, overflow-safe, and correct for inputs with a single valid pair, though it only compiles with GCC. It solves textbook
 Two Sum instead of the prompt's version: it returns the pair with the smallest j, and its explanation
 confidently claims the opposite. The fix is small, but the explanation should not be trusted.

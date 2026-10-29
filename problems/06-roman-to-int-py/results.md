@@ -6,9 +6,9 @@ Environment: Python 3.9.6, Darwin x86_64
 
 | Test | Category | Result | Time (s) | Details |
 |---|---|---|---|---|
-| basic | basic | PASS | 0.05 |  |
+| basic | basic | PASS | 0.06 |  |
 | all subtractive pairs | basic | PASS | 0.04 |  |
-| largest value | edge | PASS | 0.04 |  |
+| largest value | edge | PASS | 0.05 |  |
 | smallest value | edge | PASS | 0.04 |  |
 | four in a row is invalid | spec | PASS | 0.04 |  |
 | repeated V/L/D is invalid | spec | PASS | 0.04 |  |

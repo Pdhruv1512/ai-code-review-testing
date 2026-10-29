@@ -6,11 +6,11 @@ Environment: Python 3.9.6, Apple clang version 17.0.0 (clang-1700.0.13.5), Darwi
 
 | Test | Category | Result | Time (s) | Details |
 |---|---|---|---|---|
-| basic | basic | PASS | 0.29 |  |
+| basic | basic | PASS | 0.27 |  |
 | single word | edge | PASS | 0.01 |  |
 | leading and trailing spaces | edge | PASS | 0.01 |  |
 | multiple spaces between words | edge | PASS | 0.01 |  |
-| empty line | edge | PASS | 0.01 |  |
+| empty line | edge | PASS | 0.00 |  |
 | only spaces | edge | PASS | 0.01 |  |
 | punctuation stays attached | spec | PASS | 0.01 |  |
 | numbers and symbols | edge | PASS | 0.01 |  |

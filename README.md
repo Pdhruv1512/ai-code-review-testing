@@ -23,14 +23,17 @@ was written specifically to make the model fail.
 - The model reliably avoided **single, famous traps** (NOT IN with NULLs, default window frame, banker's
   rounding, negative modulo, byte-wise UTF-8 reverse). It failed where **two requirements interacted**
   or where the prompt **changed a textbook rule** (Two Sum tie-break).
+- **3 of 7** C++ answers (01, 02, A1) used `#include <bits/stdc++.h>`, which exists only in GCC: they
+  **do not compile on macOS** (Apple clang) as written. `run.py` detects this, tests the logic with a
+  compatibility header in `compat/`, and records the problem in `results.md`.
 - **5 of 17** SQL/code answers came with no explanation at all (08, 09, A4, A5, A7), which makes review harder.
 
 ## Results: standard problems
 
 | # | Problem | Language | Tests passed | Verdict | Main issue found |
 |---|---|---|---|---|---|
-| 01 | [Two Sum](problems/01-two-sum-cpp/evaluation.md) | C++ | 10 / 11 | Minor fix | Returns smallest j instead of smallest i; explanation claims otherwise |
-| 02 | [Merge Intervals](problems/02-merge-intervals-cpp/evaluation.md) | C++ | 12 / 12 | Accept | None |
+| 01 | [Two Sum](problems/01-two-sum-cpp/evaluation.md) | C++ | 10 / 11 | Minor fix | Returns smallest j instead of smallest i; explanation claims otherwise; GCC-only header |
+| 02 | [Merge Intervals](problems/02-merge-intervals-cpp/evaluation.md) | C++ | 12 / 12 | Accept | GCC-only header; does not compile on macOS clang |
 | 03 | [First Occurrence](problems/03-first-occurrence-cpp/evaluation.md) | C++ | 11 / 11 | Accept | None |
 | 04 | [Reverse Words](problems/04-reverse-words-cpp/evaluation.md) | C++ | 9 / 10 | Minor fix | Tab treated as a word separator |
 | 05 | [Moving Average](problems/05-moving-average-py/evaluation.md) | Python | 11 / 12 | Minor fix | Prints `-0.00`; float drift at extreme values |
@@ -94,6 +97,7 @@ Note: SQL results can depend on the SQLite version (see problem 08). `results.md
 
 ```
 run.py                     test runner
+compat/bits/stdc++.h       stand-in for GCC's <bits/stdc++.h> on other compilers (used only as a fallback)
 RUBRIC.md                  scoring rubric (6 dimensions, 1–5)
 EVALUATION_TEMPLATE.md     template for each write-up
 problems/NN-name/
